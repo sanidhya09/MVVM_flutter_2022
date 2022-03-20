@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-
-import 'network/api_client.dart';
+import 'package:list_view_flutter/network/network_repository.dart';
+import 'network/base_model.dart';
 import 'network/models/post.dart';
 
 void main() {
@@ -68,7 +68,7 @@ class _MyHomePageState extends State<MyHomePage> {
         // the App.build method, and use it to set our appbar title.
         title: Text(widget.title),
       ),
-      body: _buildBody(context),
+      body: _buildBodyList(context),
       floatingActionButton: FloatingActionButton(
         onPressed: _incrementCounter,
         tooltip: 'Increment',
@@ -78,14 +78,30 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   // build list view & manage states
-  FutureBuilder<Post> _buildBody(BuildContext context) {
-    final client = ApiClient();
-    return FutureBuilder<Post>(
-      future: client.getPostFromId(2),
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.done) {
-          final Post? posts = snapshot.data;
+  FutureBuilder<BaseModel<Post>> _buildBody(BuildContext context) {
+    return FutureBuilder<BaseModel<Post>>(
+      future: NetworkRepository().getResponseFromServer(2),
+      builder: (context, baseModel) {
+        if (baseModel.connectionState == ConnectionState.done) {
+          final Post? posts = baseModel.data?.data;
           return _buildListView(context, posts);
+        } else {
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        }
+      },
+    );
+  }
+
+  // build list view & manage states
+  FutureBuilder<BaseModel<List<Post>>> _buildBodyList(BuildContext context) {
+    return FutureBuilder<BaseModel<List<Post>>>(
+      future: NetworkRepository().getResponseListFromServer(),
+      builder: (context, baseModel) {
+        if (baseModel.connectionState == ConnectionState.done) {
+          final List<Post>? posts = baseModel.data?.data;
+          return _buildListView2(context, posts);
         } else {
           return const Center(
             child: CircularProgressIndicator(),
@@ -115,6 +131,27 @@ class _MyHomePageState extends State<MyHomePage> {
         );
       },
       itemCount: 1,
+    );
+  }
+  Widget _buildListView2(BuildContext context, List<Post>? posts) {
+    return ListView.builder(
+      itemBuilder: (context, index) {
+        return Card(
+          child: ListTile(
+            leading: const Icon(
+              Icons.account_box,
+              color: Colors.green,
+              size: 50,
+            ),
+            title: Text(
+              posts![index].title,
+              style: const TextStyle(fontSize: 20),
+            ),
+            subtitle: Text(posts![index].body),
+          ),
+        );
+      },
+      itemCount: posts!.length,
     );
   }
 }

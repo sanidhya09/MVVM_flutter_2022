@@ -16,7 +16,18 @@ class NetworkRepository {
     try {
       response = (await apiClient.getPostFromId(id));
     } catch (error, stacktrace) {
-      // final res = (obj as DioError).response;
+      print("Exception occured: $error stackTrace: $stacktrace");
+      return BaseModel()
+          .setException(ServerError.withError(error: (error as DioError)));
+    }
+    return BaseModel()..data = response;
+  }
+
+  Future<BaseModel<List<Post>>> getResponseListFromServer() async {
+    List<Post> response;
+    try {
+      response = (await apiClient.getPosts("application/json"));
+    } catch (error, stacktrace) {
       print("Exception occured: $error stackTrace: $stacktrace");
       return BaseModel()
           .setException(ServerError.withError(error: (error as DioError)));

@@ -36,4 +36,8 @@ abstract class ApiClient {
 
   @GET("/posts/{id}")
   Future<Post> getPostFromId(@Path("id") int postId);
+
+  @GET("/posts")
+  Future<List<Post>> getPosts(@Header("Content-Type") String contentType );
+
 }
