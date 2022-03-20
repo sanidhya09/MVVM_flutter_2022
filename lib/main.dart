@@ -110,7 +110,7 @@ class _MyHomePageState extends State<MyHomePage> {
               posts!.title,
               style: const TextStyle(fontSize: 20),
             ),
-            subtitle: Text(posts!.body),
+            subtitle: Text(posts.body),
           ),
         );
       },
