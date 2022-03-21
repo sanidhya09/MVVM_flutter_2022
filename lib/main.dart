@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:list_view_flutter/network/network_repository.dart';
 import 'RefreshIndicatorListView.dart';
-import 'network/base_model.dart';
-import 'network/models/post.dart';
 
 void main() {
   runApp(MaterialApp(
