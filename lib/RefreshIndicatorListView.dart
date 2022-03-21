@@ -1,35 +1,34 @@
 import 'package:flutter/material.dart';
-import 'package:list_view_flutter/network/network_repository.dart';
-import 'RefreshIndicatorListView.dart';
-import 'network/base_model.dart';
 import 'network/models/post.dart';
+import 'network/base_model.dart';
+import 'package:list_view_flutter/network/network_repository.dart';
 
-void main() {
-  runApp(MaterialApp(
-    title: 'Flutter Demo',
-    theme: ThemeData(
-      primarySwatch: Colors.red,
-    ),
-    home: const MyHomePage(title: 'Flutter Demo Home Page'),
-  ));
-}
-
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key, required this.title}) : super(key: key);
-  final String title;
+class RefreshIndicatorView extends StatefulWidget {
+  const RefreshIndicatorView({Key? key}) : super(key: key);
 
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
+  _RefreshIndicatorViewState createState() => _RefreshIndicatorViewState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _RefreshIndicatorViewState extends State<RefreshIndicatorView> {
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
+    return RefreshIndicator(
+      displacement: 250,
+      backgroundColor: Colors.yellow,
+      color: Colors.red,
+      strokeWidth: 3,
+      triggerMode: RefreshIndicatorTriggerMode.onEdge,
+      onRefresh: () async {
+        setState(() {
+          _buildBodyList(context);
+        });
+      },
+      child: Scaffold(
+        backgroundColor: const Color(0xff246df8),
+        body: _buildBodyList(context),
       ),
-      body: RefreshIndicatorView(),
     );
   }
 
