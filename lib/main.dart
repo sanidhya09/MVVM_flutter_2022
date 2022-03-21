@@ -29,49 +29,7 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         title: Text(widget.title),
       ),
-      body: RefreshIndicatorView(),
+      body: const RefreshIndicatorView(),
     );
-  }
-
-  // build list view & manage states
-  FutureBuilder<BaseModel<List<Post>>> _buildBodyList(BuildContext context) {
-    return FutureBuilder<BaseModel<List<Post>>>(
-      future: NetworkRepository().getResponseListFromServer(),
-      builder: (context, baseModel) {
-        if (baseModel.connectionState == ConnectionState.done) {
-          final List<Post>? posts = baseModel.data?.data;
-          return _buildListView(context, posts);
-        } else {
-          return const Center(
-            child: CircularProgressIndicator(),
-          );
-        }
-      },
-    );
-  }
-
-  Widget _buildListView(BuildContext context, List<Post>? posts) {
-    return ListView.builder(
-        itemBuilder: (context, index) {
-          return Card(
-            child: ListTile(
-              leading: const Icon(
-                Icons.account_box,
-                color: Colors.green,
-                size: 50,
-              ),
-              title: Text(
-                posts![index].title,
-                style: const TextStyle(fontSize: 20),
-              ),
-              subtitle: Text(posts![index].body),
-            ),
-          );
-        },
-        itemCount: posts!.length,
-        shrinkWrap: true,
-        physics: const BouncingScrollPhysics(
-            parent: AlwaysScrollableScrollPhysics()),
-        scrollDirection: Axis.vertical);
   }
 }
