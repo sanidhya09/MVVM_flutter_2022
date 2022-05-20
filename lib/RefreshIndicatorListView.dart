@@ -63,7 +63,7 @@ class _RefreshIndicatorViewState extends State<RefreshIndicatorView> {
                 posts![index].title,
                 style: const TextStyle(fontSize: 20),
               ),
-              subtitle: Text(posts![index].body),
+              subtitle: Text(posts[index].body),
             ),
           );
         },
