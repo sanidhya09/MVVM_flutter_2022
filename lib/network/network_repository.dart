@@ -1,3 +1,4 @@
+import 'package:list_view_flutter/api_status.dart';
 import 'package:list_view_flutter/network/base_model.dart';
 import 'package:list_view_flutter/network/server_error.dart';
 import 'package:dio/dio.dart' hide Headers;
@@ -33,6 +34,18 @@ class NetworkRepository {
           .setException(ServerError.withError(error: (error as DioError)));
     }
     return BaseModel()..data = response;
+  }
+
+
+  Future<Object> getResponseListFromServer2() async {
+    List<Post> responseFromServer;
+    try {
+      responseFromServer = (await apiClient.getPosts("application/json"));
+    } catch (error, stacktrace) {
+      print("Exception occured: $error stackTrace: $stacktrace");
+      return Failure(ServerError.withError(error: (error as DioError)));
+    }
+    return Success(responseFromServer);
   }
 
   void getResponseFromServer2(int id) {

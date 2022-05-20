@@ -37,6 +37,7 @@ dependencies:
   retrofit: any
   logger: any
   json_annotation: any
+  provider: ^5.0.0
 
 
 dev_dependencies:
@@ -52,6 +53,7 @@ dev_dependencies:
   retrofit_generator: any
   build_runner: any
   json_serializable: any
+  provider: ^5.0.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
