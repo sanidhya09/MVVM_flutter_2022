@@ -1,9 +1,9 @@
 import 'dart:developer';
 
 import 'package:dio/dio.dart';
-import 'package:list_view_flutter/network/base_model.dart';
-import 'package:list_view_flutter/network/models/post.dart';
 import 'package:retrofit/retrofit.dart';
+
+import '../my_list_modules/models/post.dart';
 
 part 'api_client.g.dart';
 

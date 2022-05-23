@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:list_view_flutter/RefreshListViewModel.dart';
-import 'package:list_view_flutter/SecondFragment.dart';
+import 'package:list_view_flutter/my_list_modules/RefreshListViewModel.dart';
+import 'package:list_view_flutter/my_camera_module/SecondFragment.dart';
 import 'package:provider/provider.dart';
 
-import 'network/models/post.dart';
+import 'models/post.dart';
+
 
 class RefreshIndicatorView extends StatefulWidget {
   const RefreshIndicatorView({Key? key}) : super(key: key);

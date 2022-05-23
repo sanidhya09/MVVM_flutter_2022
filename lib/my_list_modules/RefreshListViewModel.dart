@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:list_view_flutter/network/server_error.dart';
 
-import 'api_status.dart';
+import '../network/api_status.dart';
+import 'models/post.dart';
 import 'my_list_services.dart';
-import 'network/models/post.dart';
-import 'network/network_repository.dart';
+import '../network/network_repository.dart';
 
 class RefreshListViewModel extends ChangeNotifier {
   bool _loading = false;
