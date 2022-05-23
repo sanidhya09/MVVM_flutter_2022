@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:list_view_flutter/RefreshListViewModel.dart';
 import 'package:provider/provider.dart';
 
+import 'FirstFragment.dart';
 import 'RefreshIndicatorListView.dart';
+import 'SecondFragment.dart';
 
 void main() {
   runApp(MaterialApp(
@@ -10,27 +12,102 @@ void main() {
     theme: ThemeData(
       primarySwatch: Colors.red,
     ),
-    home: const MyHomePage(title: 'Flutter Demo Home Page'),
+    home: MyHomePage(),
   ));
 }
 
-class MyHomePage extends StatelessWidget {
-  const MyHomePage({Key? key, required this.title}) : super(key: key);
-  final String title;
+class DrawerItem {
+  String title;
+  IconData icon;
+
+  DrawerItem(this.title, this.icon);
+}
+
+class MyHomePage extends StatefulWidget {
+  final drawerItems = [
+    DrawerItem("My ListView ", Icons.rss_feed),
+    DrawerItem("Hello World", Icons.local_pizza),
+    DrawerItem("About Us", Icons.info)
+  ];
+
+  @override
+  State<StatefulWidget> createState() {
+    return HomePageState();
+  }
+}
+
+class HomePageState extends State<MyHomePage> {
+  int _selectedDrawerIndex = 0;
+
+  String currentProfilePic =
+      "https://yt3.ggpht.com/ytc/AKedOLS5kAZSAbS-v_HPwb9TpGbytE74eqHM2S1bLAHqrFE=s176-c-k-c0x00ffffff-no-rj";
+
+  _getDrawerItemWidget(int pos) {
+    switch (pos) {
+      case 0:
+        return FirstFragment();
+      case 1:
+        return const SecondFragment();
+      case 2:
+        return FirstFragment();
+      default:
+        return const Text("Error");
+    }
+  }
+
+  _onSelectItem(int index) {
+    setState(() => _selectedDrawerIndex = index);
+    Navigator.of(context).pop(); // close the drawer
+  }
 
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(
-      providers: [
-        ChangeNotifierProvider(create: (_) => RefreshListViewModel()),
-      ],
+    List<Widget> drawerOptions = [];
+    for (var i = 0; i < widget.drawerItems.length; i++) {
+      var d = widget.drawerItems[i];
+      drawerOptions.add(ListTile(
+        leading: Icon(d.icon),
+        title: Text(d.title),
+        selected: i == _selectedDrawerIndex,
+        onTap: () => _onSelectItem(i),
+      ));
+    }
+
+    return WillPopScope(
+      onWillPop: () async {
+        if (_selectedDrawerIndex != 0) {
+          setState(() {
+            _selectedDrawerIndex = 0;
+          });
+          _getDrawerItemWidget(_selectedDrawerIndex);
+        } else {
+          Navigator.pop(context, true);
+        }
+        return false;
+      },
       child: Scaffold(
         appBar: AppBar(
-          title: Text(title),
+          title: Text(widget.drawerItems[_selectedDrawerIndex].title),
         ),
-        body: const RefreshIndicatorView(),
+        drawer: Drawer(
+          child: Column(
+            children: <Widget>[
+              UserAccountsDrawerHeader(
+                accountEmail: const Text("sanidhya09@gmail.com"),
+                accountName: const Text("Sanidhya Kumar"),
+                currentAccountPicture: GestureDetector(
+                  child: CircleAvatar(
+                    backgroundImage: NetworkImage(currentProfilePic),
+                  ),
+                  onTap: () => print("This is your current account."),
+                ),
+              ),
+              Column(children: drawerOptions)
+            ],
+          ),
+        ),
+        body: _getDrawerItemWidget(_selectedDrawerIndex),
       ),
     );
   }
 }
-

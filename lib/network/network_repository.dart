@@ -1,7 +1,8 @@
+import 'package:dio/dio.dart' hide Headers;
 import 'package:list_view_flutter/api_status.dart';
 import 'package:list_view_flutter/network/base_model.dart';
 import 'package:list_view_flutter/network/server_error.dart';
-import 'package:dio/dio.dart' hide Headers;
+
 import 'api_client.dart';
 import 'models/post.dart';
 
@@ -35,7 +36,6 @@ class NetworkRepository {
     }
     return BaseModel()..data = response;
   }
-
 
   Future<Object> getResponseListFromServer2() async {
     List<Post> responseFromServer;
