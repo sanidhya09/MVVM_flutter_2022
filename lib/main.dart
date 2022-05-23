@@ -8,10 +8,7 @@ import 'SecondFragment.dart';
 
 void main() {
   runApp(MaterialApp(
-    title: 'Flutter Demo',
-    theme: ThemeData(
-      primarySwatch: Colors.red,
-    ),
+    debugShowCheckedModeBanner: false,
     home: MyHomePage(),
   ));
 }
@@ -47,7 +44,7 @@ class HomePageState extends State<MyHomePage> {
       case 0:
         return FirstFragment();
       case 1:
-        return const SecondFragment();
+        return SecondFragment(false);
       case 2:
         return FirstFragment();
       default:

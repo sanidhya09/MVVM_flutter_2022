@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:list_view_flutter/RefreshListViewModel.dart';
+import 'package:list_view_flutter/SecondFragment.dart';
 import 'package:provider/provider.dart';
 
 import 'network/models/post.dart';
@@ -18,8 +19,8 @@ class _RefreshIndicatorViewState extends State<RefreshIndicatorView> {
         context.watch<RefreshListViewModel>();
     return RefreshIndicator(
       displacement: 250,
-      backgroundColor: Colors.yellow,
-      color: Colors.red,
+      backgroundColor: Colors.grey,
+      color: Colors.black38,
       strokeWidth: 3,
       triggerMode: RefreshIndicatorTriggerMode.onEdge,
       onRefresh: () async {
@@ -29,7 +30,7 @@ class _RefreshIndicatorViewState extends State<RefreshIndicatorView> {
         });
       },
       child: Scaffold(
-        backgroundColor: const Color(0xff246df8),
+        backgroundColor:  Colors.black12,
         body: _buildBodyList(context, refreshListViewModel),
       ),
     );
@@ -43,7 +44,7 @@ class _RefreshIndicatorViewState extends State<RefreshIndicatorView> {
         child: CircularProgressIndicator(),
       );
     }
-    if(refreshListViewModel.postListModel.isNotEmpty){
+    if (refreshListViewModel.postListModel.isNotEmpty) {
       return _buildListView(context, refreshListViewModel.postListModel);
     }
     refreshListViewModel.getPostList();
@@ -59,11 +60,13 @@ class _RefreshIndicatorViewState extends State<RefreshIndicatorView> {
                 color: Colors.green,
                 size: 50,
               ),
-              title: Text(
-                posts![index].title,
-                style: const TextStyle(fontSize: 20),
-              ),
-              subtitle: Text(posts[index].body),
+              title: Text(posts![index].title,
+                  style: const TextStyle(fontSize: 20),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis),
+              subtitle: Text(posts[index].body,
+                  maxLines: 4, overflow: TextOverflow.ellipsis),
+              onTap: () => openDetailPage(context),
             ),
           );
         },
@@ -72,5 +75,9 @@ class _RefreshIndicatorViewState extends State<RefreshIndicatorView> {
         physics: const BouncingScrollPhysics(
             parent: AlwaysScrollableScrollPhysics()),
         scrollDirection: Axis.vertical);
+  }
+
+  openDetailPage(BuildContext context) {
+    Navigator.push(context, MaterialPageRoute(builder: (context) => SecondFragment(true)));
   }
 }

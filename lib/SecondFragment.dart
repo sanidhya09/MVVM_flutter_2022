@@ -1,13 +1,25 @@
 import 'package:flutter/material.dart';
 
 class SecondFragment extends StatelessWidget {
-  const SecondFragment({Key? key}) : super(key: key);
+  bool fromWhichScreen;
+  SecondFragment(this.fromWhichScreen, {Key? key}) : super(key: key);
+
+
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: Scaffold(
-        body: Center(
+        appBar:  fromWhichScreen ? AppBar(
+          leading:  BackButton(
+              color: Colors.white,
+              onPressed: () => Navigator.of(context).pop(),
+          ),
+          title: const Text("Detail Fragment"),
+          centerTitle: true,
+        ):null,
+        body: const Center(
           child: Text('Hello World'),
         ),
       ),
