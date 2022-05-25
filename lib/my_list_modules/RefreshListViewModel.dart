@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 import '../network/api_status.dart';
 import 'models/post.dart';
-import 'my_list_services.dart';
+import 'MyListsServices.dart';
 
 class RefreshListViewModel extends ChangeNotifier {
   bool _loading = false;

@@ -16,8 +16,7 @@ class SecondFragment extends StatelessWidget {
               color: Colors.white,
               onPressed: () => Navigator.of(context).pop(),
           ),
-          title: const Text("Detail Fragment"),
-          centerTitle: true,
+          title: const Text("Detail Fragment")
         ):null,
         body: const Center(
           child: Text('Hello World'),
