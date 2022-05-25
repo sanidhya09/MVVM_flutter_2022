@@ -1,10 +1,20 @@
+import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/retry.dart';
 
 import 'api_status.dart';
 
 class APIClient {
-  static const String BASE_URL = "jsonplaceholder.typicode.com";
+  static final APIClient _singleton = APIClient._internal();
+
+  factory APIClient() {
+    return _singleton;
+  }
+  APIClient._internal();
+
+  static String BASE_URL = kReleaseMode
+      ? "jsonplaceholder.typicode.com"
+      : "jsonplaceholder.typicode.com";
 
   Future<Object> makeApiRequest(String url, String type,
       Map<String, dynamic> data, bool enableRetry) async {

@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:list_view_flutter/my_list_modules/RefreshListViewModel.dart';
-import 'package:provider/provider.dart';
 
-import 'my_list_modules/FirstFragment.dart';
-import 'my_list_modules/RefreshIndicatorListView.dart';
 import 'my_camera_module/SecondFragment.dart';
+import 'my_list_modules/FirstFragment.dart';
 
 void main() {
   runApp(MaterialApp(

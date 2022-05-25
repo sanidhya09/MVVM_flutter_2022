@@ -1,6 +1,13 @@
-import 'package:list_view_flutter/network/my_client.dart';
+import 'package:list_view_flutter/network/APIClient.dart';
 
 class NetworkRepository {
+  static final NetworkRepository _singleton = NetworkRepository._internal();
+
+  factory NetworkRepository() {
+    return _singleton;
+  }
+  NetworkRepository._internal();
+
 
   Future<Object> makeGetRequest(String url) async {
     var myClient = APIClient();
