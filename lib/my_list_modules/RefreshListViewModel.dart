@@ -1,10 +1,10 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
-import 'package:list_view_flutter/network/server_error.dart';
 
 import '../network/api_status.dart';
 import 'models/post.dart';
 import 'my_list_services.dart';
-import '../network/network_repository.dart';
 
 class RefreshListViewModel extends ChangeNotifier {
   bool _loading = false;
@@ -27,10 +27,16 @@ class RefreshListViewModel extends ChangeNotifier {
     setLoading(true);
     var response = await MyListServices.getPostsListFromServer();
     if (response is Success) {
-      setUserListModel(response.response as List<Post>);
+      List<dynamic> decodeJson = json.decode(response.response.toString());
+      List<Post> _postListModel = [];
+      for (int i = 0; i <= decodeJson.length - 1; i++) {
+        var post = Post.fromJson(decodeJson[i]);
+        _postListModel.add(post);
+      }
+      setUserListModel(_postListModel);
     }
     if (response is Failure) {
-      print((response.errorResponse as ServerError).getErrorMessage());
+      //DO something
     }
     setLoading(false);
   }

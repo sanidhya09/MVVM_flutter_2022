@@ -38,6 +38,7 @@ dependencies:
   logger: any
   json_annotation: any
   provider: ^5.0.0
+  http: 0.13.4
 
 
 dev_dependencies:
@@ -54,6 +55,7 @@ dev_dependencies:
   build_runner: any
   json_serializable: any
   provider: ^5.0.0
+  http: 0.13.4
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
